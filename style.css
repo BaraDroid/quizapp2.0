@@ -74,7 +74,7 @@ html {
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
-.one_answer:hover {
+button:hover {
     background-color: var(--call-to-action);
 }
 
@@ -91,14 +91,18 @@ html {
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
-.action_button:hover {
-    background-color: var(--gradient-dark);
-}
-
 .correct {
     background-color: var(--good-answer);
 }
 
+.correct:hover {
+    background-color: var(--good-answer);
+}
+
 .incorrect {
+    background-color: var(--bad-answer);
+}
+
+.incorrect:hover {
     background-color: var(--bad-answer);
 }
