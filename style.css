@@ -95,10 +95,10 @@ html {
     background-color: var(--gradient-dark);
 }
 
-.correct_answer {
+.correct {
     background-color: var(--good-answer);
 }
 
-.incorrect_answer {
+.incorrect {
     background-color: var(--bad-answer);
 }
