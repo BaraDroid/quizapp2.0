@@ -1,16 +1,19 @@
 let questionsCounter = 0; //ten se bude navysovat pri kazdym Durchlaufu
 
-//<h2 id="question">Wie viele Augen hat ein Mensch?</h2>
-// <div class="answer_container">
-//     <button class="one_answer incorrect" id="answerIndex0">Möglichst viele.</button>
-//     <button class="one_answer">Nur ein einziges in der Stirnmitte.</button>
-//     <button class="one_answer">Zwei.</button>
-//     <button class="one_answer correct">Es ist eine Trickfrage, ein Mensch hat keine Augen.</button>
-// </div>
-// <div class="button_bar">
-//     <button class="action_button">Lösung</button>
-//     <button class="action_button">Weiter</button>
-// </div>
+        // <div class="quiz_tab" id="quizTab">
+        //     <h1>Quiz</h1>
+        //     <h2 id="question">Wie viele Augen hat ein Mensch?</h2>
+        //     <div class="answer_container">
+        //         <button class="one_answer incorrect" id="answerIndex0">Möglichst viele.</button>
+        //         <button class="one_answer">Nur ein einziges in der Stirnmitte.</button>
+        //         <button class="one_answer">Zwei.</button>
+        //         <button class="one_answer correct">Es ist eine Trickfrage, ein Mensch hat keine Augen.</button>
+        //     </div>
+        //     <div class="button_bar">
+        //         <button class="action_button">Lösung</button>
+        //         <button class="action_button">Weiter</button>
+        //     </div>
+        // </div>
 
 function renderQuestion() {
     if (questionsCounter <= quizQuestions.length - 1) {
@@ -25,6 +28,7 @@ function getQuizCardTemplate() {
   let questionIndex = questionsCounter;
 
   let wrapper = document.getElementById("wrapper");
+  wrapper.innerHTML = '';
   let cardTab = document.createElement('div');
   cardTab.className = 'quiz_tab';
   let title = document.createElement('h1');
