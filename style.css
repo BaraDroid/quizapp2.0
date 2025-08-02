@@ -7,8 +7,11 @@
     scroll-behavior: smooth;
     --gradient-dark: #B6E8F1;
     --gradient-bright: #FFE4D4;
-    --call-to-action: #FF6B6B;
+    --call-to-action: #fce38a;
     --text-color: #333333;
+    --tab-bgr: #f5fafa;
+    --bad-answer: #ff6b6b;
+    --good-answer: #58D68D;
 }
 
 @font-face {
@@ -20,7 +23,8 @@ button {
     cursor: pointer;
 }
 
-body {
+html {
+    height: 100%;
     font-family: 'Quicksand';
     color: var(--text-color);
     background-color: var(--gradient-dark);
@@ -31,8 +35,70 @@ body {
 
 .wrapper {
     height: 100%;
+    width: 100%;
     max-width: 1200px;
     display: grid;
     place-items: center;
 }
 
+.quiz_tab {
+    height: 100%;
+    background-color: var(--tab-bgr);
+    border-radius: 1rem;
+    padding: 3rem;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    display: flex;
+    flex-direction: column;
+}
+
+#question {
+    padding: 2rem 0;
+}
+
+.answer_container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 2rem;
+    place-items: center;
+    padding: 2rem 0;
+}
+
+.one_answer {
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    border: unset;
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.one_answer:hover {
+    background-color: var(--call-to-action);
+}
+
+.button_bar {
+    display: flex;
+    gap: 2rem;
+}
+
+.action_button {
+    background-color: white;
+    border: unset;
+    border-radius: 1rem;
+    padding: 1rem;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.action_button:hover {
+    background-color: var(--gradient-dark);
+}
+
+.correct_answer {
+    background-color: var(--good-answer);
+}
+
+.incorrect_answer {
+    background-color: var(--bad-answer);
+}
