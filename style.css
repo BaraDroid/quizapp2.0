@@ -1,0 +1,38 @@
+* {
+    position: relative;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    scroll-behavior: smooth;
+    --gradient-dark: #B6E8F1;
+    --gradient-bright: #FFE4D4;
+    --call-to-action: #FF6B6B;
+    --text-color: #333333;
+}
+
+@font-face {
+    font-family: 'Quicksand';
+    src: url('assets/Quicksand/Quicksand-VariableFont_wght.ttf');
+}
+
+button {
+    cursor: pointer;
+}
+
+body {
+    font-family: 'Quicksand';
+    color: var(--text-color);
+    background-color: var(--gradient-dark);
+    background-image: linear-gradient(135deg, var(--gradient-dark), var(--gradient-bright));
+    display: grid;
+    place-items: center;
+}
+
+.wrapper {
+    height: 100%;
+    max-width: 1200px;
+    display: grid;
+    place-items: center;
+}
+
