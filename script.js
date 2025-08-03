@@ -1,5 +1,3 @@
-
-
 let questionsCounter = 0; //ten se bude navysovat pri kazdym Durchlaufu
 let button = document.getElementById("confettiBtn");
 const canvas = document.getElementById('confettiCanvas');
@@ -7,6 +5,8 @@ const jsConfetti = new JSConfetti({ canvas })
 let timerRunning = false;
 let responseTimes = [];
 let timeTrackingIntervalId;
+let badAnswerCounter = 0;
+let goodAnswerCounter = 0;
 console.log("hello from script");
 
 // <div class="quiz_tab" id="questionId">
@@ -27,7 +27,7 @@ console.log("hello from script");
 // </div>
 
 document.addEventListener("DOMContentLoaded", renderQuestion);
-//document.addEventListener('DOMContentLoaded', trackAnswerTime);
+//document.addEventListener('DOMContentLoaded', renderFinalTab);
 
 function renderQuestion() {
   let questionIndex = questionsCounter;
@@ -37,9 +37,11 @@ function renderQuestion() {
     getQuizCardTemplate(questionIndex);
     questionsCounter++;
   } else {
+    questionsCounter = 0;
     renderFinalTab();
-    //statistiky
-    //dat questionCounter na nulu
+    badAnswerCounter = 0;
+    goodAnswerCounter = 0;
+    responseTimes = [];
   }
 }
 
@@ -55,7 +57,6 @@ function getQuizCardTemplate(index) {
   title.textContent = "Quiz";
   let timerDiv = document.createElement("div");
   timerDiv.id = 'timer';
-  /////////////////////////////////////////////////////////////////////////////
   let timerSpan = document.createElement("span");
   timerSpan.id = 'timerText';
   let timerImage = document.createElement("img");
@@ -95,10 +96,8 @@ function getQuizCardTemplate(index) {
   cardTab.appendChild(titleContainer);
   titleContainer.appendChild(title);
   titleContainer.appendChild(timerDiv);
-  ///////////////////////////////////////////////////
   timerDiv.appendChild(timerImage);
   timerDiv.appendChild(timerSpan);
-  
   cardTab.appendChild(questionTitle);
   cardTab.appendChild(answers);
   cardTab.appendChild(btnBar);
@@ -112,12 +111,14 @@ function validateAnswer(questionId, replyId) {
   return answer.correct;
   });
   if (correctAnswer.answerId === replyId) {
+    goodAnswerCounter++;
     document.getElementById(replyId).classList.add("correct");
     jsConfetti.addConfetti({confettiColors: [
     '#FF8A5B', '#FFD262', '#7ED957', '#75C7FF', '#B679FF', '#FF99C2',
   ], confettiRadius: 4,});
   stopTimeTracker();
   } else {
+    badAnswerCounter++;
     document.getElementById(replyId).classList.add("incorrect");
     document.getElementById(replyId).classList.add("shake");
     document.getElementById(replyId).classList.add("incorrect");
@@ -189,6 +190,55 @@ function startTimeTracking() {
 function stopTimeTracker() {
   timerRunning = false;
   let timeValue = document.getElementById("timer").textContent;
-  responseTimes.push(timeValue);
+  responseTimes.push(parseInt(timeValue));
   console.log(responseTimes);
+}
+
+function renderFinalTab() {
+  let wrapper = document.getElementById("wrapper");
+  wrapper.innerHTML = "";
+  let cardTab = document.createElement("div");
+  cardTab.className = "quiz_tab";
+  let titleContainer = document.createElement("div");
+  titleContainer.classList.add("title_container");
+  let title = document.createElement("h1");
+  title.textContent = "Quiz";
+  let questionTitle = document.createElement("h2");
+  questionTitle.id = "statistikTitle";
+  questionTitle.textContent = "Deine Statistik";
+
+  let myData = document.createElement("div");
+  myData.classList.add("my_data");
+  let average = document.createElement("p");
+  average.textContent = 'Durchschnittliche Antwortdauer: ' + getAverageTime();
+  let goodOnes = document.createElement("p");
+  goodOnes.textContent = 'Richtig beantwortete Fragen: ' + goodAnswerCounter;
+  let badOnes = document.createElement("p");
+  badOnes.textContent = 'Falsch geklickte Antworten: ' + badAnswerCounter;
+
+  let btnBar = document.createElement("div");
+  btnBar.classList.add("button_bar");
+  let playAgainBtn = document.createElement("button");
+  playAgainBtn.className = "action_button";
+  playAgainBtn.textContent = "Nochmal spielen";
+  playAgainBtn.setAttribute("onclick",`renderQuestion()`);
+
+  wrapper.appendChild(cardTab);
+  cardTab.appendChild(titleContainer);
+  titleContainer.appendChild(title);
+  cardTab.appendChild(questionTitle);
+  cardTab.appendChild(myData);
+  myData.appendChild(average);
+  myData.appendChild(goodOnes);
+  myData.appendChild(badOnes);
+  cardTab.appendChild(btnBar);
+  btnBar.appendChild(playAgainBtn);
+}
+
+function getAverageTime() {
+  let timeSum = responseTimes.reduce((sum, num) => {
+    return sum + num;
+  });
+  let averageTime = timeSum / responseTimes.length;
+  return averageTime.toFixed(2);
 }

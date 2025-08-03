@@ -162,3 +162,12 @@ button:hover {
     padding-left: 0.5rem;
     padding-right: 0.5rem;
 }
+
+.my_data {
+    background-color: red;
+    height: 100px;
+}
+
+#statistikTitle {
+    padding: 2rem 0;
+}
