@@ -3,6 +3,7 @@ let button = document.getElementById("confettiBtn");
 const canvas = document.getElementById('confettiCanvas');
 const jsConfetti = new JSConfetti({ canvas })
 let timerRunning = false;
+let quizRunning = false;
 let responseTimes = [];
 let timeTrackingIntervalId;
 let badAnswerCounter = 0;
@@ -26,17 +27,19 @@ console.log("hello from script");
 //     </div>
 // </div>
 
-//document.addEventListener("DOMContentLoaded", renderQuestion);
-document.addEventListener('DOMContentLoaded', renderFinalTab);
+document.addEventListener("DOMContentLoaded", renderQuestion);
+//document.addEventListener('DOMContentLoaded', renderFinalTab);
 
 function renderQuestion() {
   let questionIndex = questionsCounter;
   if (questionsCounter <= quizQuestions.length - 1) {
     timerRunning = true;
+    quizRunning = true;
     startTimeTracking();
     getQuizCardTemplate(questionIndex);
     questionsCounter++;
   } else {
+    quizRunning = false;
     questionsCounter = 0;
     renderFinalTab();
     badAnswerCounter = 0;
@@ -180,9 +183,9 @@ function startTimeTracking() {
   const startTime = Date.now();
 
   timeTrackingIntervalId = setInterval(function () {
-    if(timerRunning) {
+    if(timerRunning && quizRunning) {
       let elapsedTime = Date.now() - startTime;
-    document.getElementById("timerText").textContent = (elapsedTime / 1000).toFixed(1);
+      document.getElementById("timerText").textContent = (elapsedTime / 1000).toFixed(1);
     }
   }, 100);
 }
@@ -238,10 +241,14 @@ function renderFinalTab() {
 }
 
 function getAverageTime() {
-  // let timeSum = responseTimes.reduce((sum, num) => {
-  //   return sum + num;
-  // });
-  // let averageTime = timeSum / responseTimes.length;
-  //return averageTime.toFixed(2);
-  return 'hello world';
+  if(responseTimes.length >0) {
+    let timeSum = responseTimes.reduce((sum, num) => {
+    return sum + num;
+  });
+  let averageTime = timeSum / responseTimes.length;
+  return averageTime.toFixed(2);
+  }
+  else {
+    return "Zeit konnte man nicht messen."
+  }
 }
