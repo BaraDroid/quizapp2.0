@@ -1,3 +1,5 @@
+
+
 let questionsCounter = 0; //ten se bude navysovat pri kazdym Durchlaufu
 let button = document.getElementById("confettiBtn");
 const canvas = document.getElementById('confettiCanvas');
@@ -8,7 +10,9 @@ let timeTrackingIntervalId;
 console.log("hello from script");
 
 // <div class="quiz_tab" id="questionId">
-//     <h1>Quiz</h1>
+//     <div class="title_container">
+//       <h1>Quiz</h1>
+//     </div>
 //     <h2 id="question">Wie viele Augen hat ein Mensch?</h2>
 //     <div class="answer_container">
 //         <button class="one_answer incorrect" id="answerIndex0">Möglichst viele.</button>
@@ -45,9 +49,18 @@ function getQuizCardTemplate(index) {
   let cardTab = document.createElement("div");
   cardTab.className = "quiz_tab";
   cardTab.id = quizQuestions[index].questionId;
+  let titleContainer = document.createElement("div");
+  titleContainer.classList.add("title_container");
   let title = document.createElement("h1");
   title.textContent = "Quiz";
-
+  let timerDiv = document.createElement("div");
+  timerDiv.id = 'timer';
+  /////////////////////////////////////////////////////////////////////////////
+  let timerSpan = document.createElement("span");
+  timerSpan.id = 'timerText';
+  let timerImage = document.createElement("img");
+  timerImage.setAttribute("src", "assets/timer_icone.png");
+  timerImage.classList.add("timer_image");
   let questionTitle = document.createElement("h2");
   questionTitle.id = "question";
   questionTitle.innerHTML = quizQuestions[index].questionName;
@@ -79,7 +92,13 @@ function getQuizCardTemplate(index) {
   nextBtn.setAttribute("onclick", "renderQuestion()");
 
   wrapper.appendChild(cardTab);
-  cardTab.appendChild(title);
+  cardTab.appendChild(titleContainer);
+  titleContainer.appendChild(title);
+  titleContainer.appendChild(timerDiv);
+  ///////////////////////////////////////////////////
+  timerDiv.appendChild(timerImage);
+  timerDiv.appendChild(timerSpan);
+  
   cardTab.appendChild(questionTitle);
   cardTab.appendChild(answers);
   cardTab.appendChild(btnBar);
@@ -97,11 +116,7 @@ function validateAnswer(questionId, replyId) {
     jsConfetti.addConfetti({confettiColors: [
     '#FF8A5B', '#FFD262', '#7ED957', '#75C7FF', '#B679FF', '#FF99C2',
   ], confettiRadius: 4,});
-    timerRunning = false;
-    let timeValue = document.getElementById("timer").textContent;
-    responseTimes.push(timeValue);
-    console.log(responseTimes);
-    
+  stopTimeTracker();
   } else {
     document.getElementById(replyId).classList.add("incorrect");
     document.getElementById(replyId).classList.add("shake");
@@ -114,6 +129,7 @@ function validateAnswer(questionId, replyId) {
 }
 
 function showSolution(questionId) {
+    stopTimeTracker();
     let currentQuestion = quizQuestions[questionId - 1];
     let correctAnswer = currentQuestion.answers.find((answer) => {
     return answer.correct;
@@ -165,16 +181,14 @@ function startTimeTracking() {
   timeTrackingIntervalId = setInterval(function () {
     if(timerRunning) {
       let elapsedTime = Date.now() - startTime;
-    document.getElementById("timer").textContent = (elapsedTime / 1000).toFixed(1);
+    document.getElementById("timerText").textContent = (elapsedTime / 1000).toFixed(1);
     }
-    
   }, 100);
 }
 
-function trackAnswerTime() {
-  setInterval(() => {
-    if(timerRunning) {
-      console.log("cas bezi!");
-    }
-  }, 100);
+function stopTimeTracker() {
+  timerRunning = false;
+  let timeValue = document.getElementById("timer").textContent;
+  responseTimes.push(timeValue);
+  console.log(responseTimes);
 }

@@ -133,3 +133,32 @@ button:hover {
     30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
     40%, 60% { transform: translate3d(4px, 0, 0); }
 }
+
+.title_container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#timer {
+    background-color: var(--call-to-action);
+    padding: 1rem;
+    width: 8rem;
+    border-radius: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+
+.timer_image {
+    height: 2rem;
+    width: 2rem;
+}
+
+#timerText {
+    text-align: center;
+    width: 3rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
