@@ -163,11 +163,22 @@ button:hover {
     padding-right: 0.5rem;
 }
 
-.my_data {
-    background-color: red;
-    height: 100px;
+@keyframes glowing-shadow {
+  0% {box-shadow: 0 0 10px 5px var(--bad-answer);}
+  50% {box-shadow: 0 0 20px 10px var(--gradient-bright);}
+  100% {box-shadow: 0 0 10px 5px var(--gradient-dark);}
+}
+
+#myData {
+    height: fit-content;
+    animation: glowing-shadow 2s infinite alternate;
 }
 
 #statistikTitle {
-    padding: 2rem 0;
+    margin-bottom: -2rem;
+}
+
+#playAgain {
+    background-color: var(--gradient-dark);
+    box-shadow: var(--gradient-bright) 0px 8px 24px;
 }

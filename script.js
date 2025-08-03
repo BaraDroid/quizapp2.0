@@ -26,8 +26,8 @@ console.log("hello from script");
 //     </div>
 // </div>
 
-document.addEventListener("DOMContentLoaded", renderQuestion);
-//document.addEventListener('DOMContentLoaded', renderFinalTab);
+//document.addEventListener("DOMContentLoaded", renderQuestion);
+document.addEventListener('DOMContentLoaded', renderFinalTab);
 
 function renderQuestion() {
   let questionIndex = questionsCounter;
@@ -205,10 +205,11 @@ function renderFinalTab() {
   title.textContent = "Quiz";
   let questionTitle = document.createElement("h2");
   questionTitle.id = "statistikTitle";
-  questionTitle.textContent = "Deine Statistik";
+  questionTitle.textContent = "Deine Statistik: ";
 
   let myData = document.createElement("div");
-  myData.classList.add("my_data");
+  myData.classList.add("one_answer");
+  myData.id = 'myData';
   let average = document.createElement("p");
   average.textContent = 'Durchschnittliche Antwortdauer: ' + getAverageTime();
   let goodOnes = document.createElement("p");
@@ -220,6 +221,7 @@ function renderFinalTab() {
   btnBar.classList.add("button_bar");
   let playAgainBtn = document.createElement("button");
   playAgainBtn.className = "action_button";
+  playAgainBtn.id = 'playAgain';
   playAgainBtn.textContent = "Nochmal spielen";
   playAgainBtn.setAttribute("onclick",`renderQuestion()`);
 
@@ -236,9 +238,10 @@ function renderFinalTab() {
 }
 
 function getAverageTime() {
-  let timeSum = responseTimes.reduce((sum, num) => {
-    return sum + num;
-  });
-  let averageTime = timeSum / responseTimes.length;
-  return averageTime.toFixed(2);
+  // let timeSum = responseTimes.reduce((sum, num) => {
+  //   return sum + num;
+  // });
+  // let averageTime = timeSum / responseTimes.length;
+  //return averageTime.toFixed(2);
+  return 'hello world';
 }
