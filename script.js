@@ -45,18 +45,15 @@ function getQuizCardTemplate(index) {
   let answers = document.createElement("div");
   answers.classList.add("answer_container");
 
-  //let answerToShuffle = shuffleAnswers(quizQuestions[index].answers)
-  let answerToShuffle = shuffleWithForLoop(quizQuestions[index].answers)
+  let answerToShuffle = shuffleAnswers(quizQuestions[index].answers)
+  //let answerToShuffle = shuffleWithForLoop(quizQuestions[index].answers)
   
   answerToShuffle.forEach((oneAnswer) => {
     let answerBtn = document.createElement("button");
     answerBtn.classList.add("one_answer");
     answerBtn.innerHTML = oneAnswer.answerContent;
     answerBtn.id = oneAnswer.answerId;
-    answerBtn.setAttribute(
-      "onclick",
-      `validateAnswer(${cardTab.id}, '${oneAnswer.answerId}')`
-    );
+    answerBtn.setAttribute("onclick", `validateAnswer(${cardTab.id}, '${oneAnswer.answerId}')`);
     answers.appendChild(answerBtn);
   });
 
@@ -120,18 +117,23 @@ function shuffleAnswers(array) {
   return shuffledAnswers;
 }
 
-function shuffleWithForLoop(array) {
-  let shuffledAnswers = [];
-  let usedIndexes = [];
+//official solution:
+//dasda hat er nicht als eigene Funktion gespeichert, sonder direkt in dem renderCard (er hat alles auf einmal, ich habe auch noch template)
+//deswegen wird das bei mir möglichst nicht funktionieren
+//außerdem zeigt es alle Antworten zweimal - einmal angegebe Folge, einmal zufällige
+function shuffleAnswerArray() {
+  let answersCopy = [];
+  quizQuestions.answers.forEach(answer => answersCopy.push(answer));
 
-  for (let index = 0; index < array.length; index++) {
-    let randomIndex = Math.floor(Math.random() * array.length);
-    if(!usedIndexes.find(element => element === randomIndex)) {
-      usedIndexes.push(randomIndex);
-    }
-    let element = array[index];
-    element = array[randomIndex];
-    shuffledAnswers.push(element);
+  while(answersCopy.length > 0) {
+    const randomPointer = Math.floor(Math.random() * answersCopy.length);
+    let answers = answersCopy.splice(randomPointer, 1)[0]; //da uns splice array zurückgibt
+
+    let answerBtn = document.createElement("button");
+    answerBtn.classList.add("one_answer");
+    answerBtn.innerHTML = oneAnswer.answerContent;
+    answerBtn.id = oneAnswer.answerId;
+    answerBtn.setAttribute("onclick", `validateAnswer(${cardTab.id}, '${oneAnswer.answerId}')`);
+    answers.appendChild(answerBtn);
   }
-  return shuffledAnswers;
 }
