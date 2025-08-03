@@ -23,7 +23,7 @@ function renderQuestion() {
   } else {
     renderFinalTab();
     //statistiky
-    //dat pocitadlo na nulu
+    //dat questionCounter na nulu
   }
 }
 
@@ -45,7 +45,9 @@ function getQuizCardTemplate(index) {
   let answers = document.createElement("div");
   answers.classList.add("answer_container");
 
-  quizQuestions[index].answers.forEach((oneAnswer) => {
+  let answerToShuffle = shuffleAnswers(quizQuestions[index].answers)
+  
+  answerToShuffle.forEach((oneAnswer) => {
     let answerBtn = document.createElement("button");
     answerBtn.classList.add("one_answer");
     answerBtn.innerHTML = oneAnswer.answerContent;
@@ -98,4 +100,21 @@ function showSolution(questionId) {
     return answer.correct;
   });
   document.getElementById(correctAnswer.answerId).classList.add("correct");
+}
+
+function shuffleAnswers(array) {
+  let shuffledAnswers = [];
+  let usedIndexes = [];
+  
+  let i = 0;
+  while(i < array.length) {
+    let randomIndex = Math.floor(Math.random() * array.length);
+    if(!usedIndexes.includes(randomIndex)) {
+      shuffledAnswers.push(array[randomIndex]);
+      usedIndexes.push(randomIndex);
+      i++
+    }
+  }
+  console.log(shuffledAnswers);
+  return shuffledAnswers;
 }
