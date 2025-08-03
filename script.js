@@ -45,7 +45,8 @@ function getQuizCardTemplate(index) {
   let answers = document.createElement("div");
   answers.classList.add("answer_container");
 
-  let answerToShuffle = shuffleAnswers(quizQuestions[index].answers)
+  //let answerToShuffle = shuffleAnswers(quizQuestions[index].answers)
+  let answerToShuffle = shuffleWithForLoop(quizQuestions[index].answers)
   
   answerToShuffle.forEach((oneAnswer) => {
     let answerBtn = document.createElement("button");
@@ -116,5 +117,21 @@ function shuffleAnswers(array) {
     }
   }
   console.log(shuffledAnswers);
+  return shuffledAnswers;
+}
+
+function shuffleWithForLoop(array) {
+  let shuffledAnswers = [];
+  let usedIndexes = [];
+
+  for (let index = 0; index < array.length; index++) {
+    let randomIndex = Math.floor(Math.random() * array.length);
+    if(!usedIndexes.find(element => element === randomIndex)) {
+      usedIndexes.push(randomIndex);
+    }
+    let element = array[index];
+    element = array[randomIndex];
+    shuffledAnswers.push(element);
+  }
   return shuffledAnswers;
 }
