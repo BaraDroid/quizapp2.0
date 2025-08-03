@@ -161,3 +161,5 @@ let quizQuestions = [
     ],
   },
 ];
+
+console.log("hello from data");

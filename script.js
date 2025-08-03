@@ -1,4 +1,7 @@
 let questionsCounter = 0; //ten se bude navysovat pri kazdym Durchlaufu
+let button = document.getElementById("confettiBtn");
+const canvas = document.getElementById('confettiCanvas');
+const jsConfetti = new JSConfetti({ canvas })
 
 // <div class="quiz_tab" id="questionId">
 //     <h1>Quiz</h1>
@@ -46,7 +49,6 @@ function getQuizCardTemplate(index) {
   answers.classList.add("answer_container");
 
   let answerToShuffle = shuffleAnswers(quizQuestions[index].answers)
-  //let answerToShuffle = shuffleWithForLoop(quizQuestions[index].answers)
   
   answerToShuffle.forEach((oneAnswer) => {
     let answerBtn = document.createElement("button");
@@ -80,12 +82,12 @@ function getQuizCardTemplate(index) {
 
 function validateAnswer(questionId, replyId) {
   let currentQuestion = quizQuestions[questionId - 1];
-  console.log(replyId);
   let correctAnswer = currentQuestion.answers.find((answer) => {
     return answer.correct;
   });
   if (correctAnswer.answerId === replyId) {
     document.getElementById(replyId).classList.add("correct");
+    jsConfetti.addConfetti();
   } else {
     document.getElementById(replyId).classList.add("incorrect");
     document.getElementById(correctAnswer.answerId).classList.add("correct");
@@ -137,3 +139,5 @@ function shuffleAnswerArray() {
     answers.appendChild(answerBtn);
   }
 }
+
+console.log("hello from script");
