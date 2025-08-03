@@ -83,11 +83,13 @@ function getQuizCardTemplate(index) {
 function validateAnswer(questionId, replyId) {
   let currentQuestion = quizQuestions[questionId - 1];
   let correctAnswer = currentQuestion.answers.find((answer) => {
-    return answer.correct;
+  return answer.correct;
   });
   if (correctAnswer.answerId === replyId) {
     document.getElementById(replyId).classList.add("correct");
-    jsConfetti.addConfetti();
+    jsConfetti.addConfetti({confettiColors: [
+    '#FF8A5B', '#FFD262', '#7ED957', '#75C7FF', '#B679FF', '#FF99C2',
+  ], confettiRadius: 4,});
   } else {
     document.getElementById(replyId).classList.add("incorrect");
     document.getElementById(correctAnswer.answerId).classList.add("correct");
