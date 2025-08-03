@@ -92,7 +92,12 @@ function validateAnswer(questionId, replyId) {
   ], confettiRadius: 4,});
   } else {
     document.getElementById(replyId).classList.add("incorrect");
-    document.getElementById(correctAnswer.answerId).classList.add("correct");
+    document.getElementById(replyId).classList.add("shake");
+    document.getElementById(replyId).classList.add("incorrect");
+    setTimeout(() => {
+          document.getElementById(replyId).classList.remove("incorrect");
+          document.getElementById(replyId).classList.remove("shake");
+    }, 850);
   }
 }
 
@@ -117,7 +122,6 @@ function shuffleAnswers(array) {
       i++
     }
   }
-  console.log(shuffledAnswers);
   return shuffledAnswers;
 }
 
