@@ -2,6 +2,10 @@ let questionsCounter = 0; //ten se bude navysovat pri kazdym Durchlaufu
 let button = document.getElementById("confettiBtn");
 const canvas = document.getElementById('confettiCanvas');
 const jsConfetti = new JSConfetti({ canvas })
+let timerRunning = false;
+let responseTimes = [];
+let timeTrackingIntervalId;
+console.log("hello from script");
 
 // <div class="quiz_tab" id="questionId">
 //     <h1>Quiz</h1>
@@ -18,9 +22,14 @@ const jsConfetti = new JSConfetti({ canvas })
 //     </div>
 // </div>
 
+document.addEventListener("DOMContentLoaded", renderQuestion);
+//document.addEventListener('DOMContentLoaded', trackAnswerTime);
+
 function renderQuestion() {
   let questionIndex = questionsCounter;
   if (questionsCounter <= quizQuestions.length - 1) {
+    timerRunning = true;
+    startTimeTracking();
     getQuizCardTemplate(questionIndex);
     questionsCounter++;
   } else {
@@ -29,8 +38,6 @@ function renderQuestion() {
     //dat questionCounter na nulu
   }
 }
-
-document.addEventListener("DOMContentLoaded", renderQuestion);
 
 function getQuizCardTemplate(index) {
   let wrapper = document.getElementById("wrapper");
@@ -90,6 +97,11 @@ function validateAnswer(questionId, replyId) {
     jsConfetti.addConfetti({confettiColors: [
     '#FF8A5B', '#FFD262', '#7ED957', '#75C7FF', '#B679FF', '#FF99C2',
   ], confettiRadius: 4,});
+    timerRunning = false;
+    let timeValue = document.getElementById("timer").textContent;
+    responseTimes.push(timeValue);
+    console.log(responseTimes);
+    
   } else {
     document.getElementById(replyId).classList.add("incorrect");
     document.getElementById(replyId).classList.add("shake");
@@ -146,4 +158,23 @@ function shuffleAnswerArray() {
   }
 }
 
-console.log("hello from script");
+function startTimeTracking() {
+  clearInterval(timeTrackingIntervalId);
+  const startTime = Date.now();
+
+  timeTrackingIntervalId = setInterval(function () {
+    if(timerRunning) {
+      let elapsedTime = Date.now() - startTime;
+    document.getElementById("timer").textContent = (elapsedTime / 1000).toFixed(1);
+    }
+    
+  }, 100);
+}
+
+function trackAnswerTime() {
+  setInterval(() => {
+    if(timerRunning) {
+      console.log("cas bezi!");
+    }
+  }, 100);
+}
