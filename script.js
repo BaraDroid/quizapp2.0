@@ -1,14 +1,15 @@
 let questionsCounter = 0; //ten se bude navysovat pri kazdym Durchlaufu
 let button = document.getElementById("confettiBtn");
-const canvas = document.getElementById('confettiCanvas');
-const jsConfetti = new JSConfetti({ canvas })
+//const canvas = document.getElementById('confettiCanvas');
+// const jsConfetti = new JSConfetti({ canvas })
+const jsConfetti = new JSConfetti();
+
 let timerRunning = false;
 let quizRunning = false;
 let responseTimes = [];
 let timeTrackingIntervalId;
 let badAnswerCounter = 0;
 let goodAnswerCounter = 0;
-console.log("hello from script");
 
 // <div class="quiz_tab" id="questionId">
 //     <div class="title_container">
