@@ -184,6 +184,17 @@ button:hover {
     box-shadow: var(--gradient-bright) 0px 8px 24px;
 }
 
+.footer {
+    font-family: 'Quicksand';
+    color: var(--bad-answer);
+    text-wrap: nowrap;
+}
+
+.footer a {
+    color: var(--text-color);
+    z-index: 7;
+}
+
 /************+RESPONSIVENESS**************************+*/
 @media (max-width: 800px) {
     .answer_container {
