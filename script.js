@@ -1,4 +1,4 @@
-let questionsCounter = 0; //ten se bude navysovat pri kazdym Durchlaufu
+let questionsCounter = 0;
 let button = document.getElementById("confettiBtn");
 //const canvas = document.getElementById('confettiCanvas');
 // const jsConfetti = new JSConfetti({ canvas })
@@ -11,6 +11,7 @@ let timeTrackingIntervalId;
 let badAnswerCounter = 0;
 let goodAnswerCounter = 0;
 
+//*region One card as HTML template for renderQuestion function.
 // <div class="quiz_tab" id="questionId">
 //     <div class="title_container">
 //       <h1>Quiz</h1>
@@ -34,18 +35,14 @@ document.addEventListener("DOMContentLoaded", renderQuestion);
 function renderQuestion() {
   let questionIndex = questionsCounter;
   if (questionsCounter <= quizQuestions.length - 1) {
-    timerRunning = true;
     quizRunning = true;
-    startTimeTracking();
     getQuizCardTemplate(questionIndex);
+    startTimeTracking();
     questionsCounter++;
   } else {
     quizRunning = false;
-    questionsCounter = 0;
     renderFinalTab();
-    badAnswerCounter = 0;
-    goodAnswerCounter = 0;
-    responseTimes = [];
+    setCountersBack();
   }
 }
 
@@ -72,17 +69,8 @@ function getQuizCardTemplate(index) {
 
   let answers = document.createElement("div");
   answers.classList.add("answer_container");
-
-  let answerToShuffle = shuffleAnswers(quizQuestions[index].answers)
-  
-  answerToShuffle.forEach((oneAnswer) => {
-    let answerBtn = document.createElement("button");
-    answerBtn.classList.add("one_answer");
-    answerBtn.innerHTML = oneAnswer.answerContent;
-    answerBtn.id = oneAnswer.answerId;
-    answerBtn.setAttribute("onclick", `validateAnswer(${cardTab.id}, '${oneAnswer.answerId}')`);
-    answers.appendChild(answerBtn);
-  });
+  let answerToShuffle = shuffleAnswers(quizQuestions[index].answers);
+  createAnswerButtons(answerToShuffle, cardTab.id, answers);
 
   let btnBar = document.createElement("div");
   btnBar.classList.add("button_bar");
@@ -115,21 +103,10 @@ function validateAnswer(questionId, replyId) {
   return answer.correct;
   });
   if (correctAnswer.answerId === replyId) {
-    goodAnswerCounter++;
-    document.getElementById(replyId).classList.add("correct");
-    jsConfetti.addConfetti({confettiColors: [
-    '#FF8A5B', '#FFD262', '#7ED957', '#75C7FF', '#B679FF', '#FF99C2',
-  ], confettiRadius: 4,});
-  stopTimeTracker();
+    getGoodAnswerStyle(replyId);
+    stopTimeTracker();
   } else {
-    badAnswerCounter++;
-    document.getElementById(replyId).classList.add("incorrect");
-    document.getElementById(replyId).classList.add("shake");
-    document.getElementById(replyId).classList.add("incorrect");
-    setTimeout(() => {
-          document.getElementById(replyId).classList.remove("incorrect");
-          document.getElementById(replyId).classList.remove("shake");
-    }, 850);
+    getBadAnswerStyle(replyId);
   }
 }
 
@@ -145,7 +122,6 @@ function showSolution(questionId) {
 function shuffleAnswers(array) {
   let shuffledAnswers = [];
   let usedIndexes = [];
-  
   let i = 0;
   while(i < array.length) {
     let randomIndex = Math.floor(Math.random() * array.length);
@@ -158,7 +134,7 @@ function shuffleAnswers(array) {
   return shuffledAnswers;
 }
 
-//official solution:
+//*region Oficial given solution of shuffle function
 //dasda hat er nicht als eigene Funktion gespeichert, sonder direkt in dem renderCard (er hat alles auf einmal, ich habe auch noch template)
 //deswegen wird das bei mir möglichst nicht funktionieren
 //außerdem zeigt es alle Antworten zweimal - einmal angegebe Folge, einmal zufällige
@@ -181,8 +157,8 @@ function shuffleAnswerArray() {
 
 function startTimeTracking() {
   clearInterval(timeTrackingIntervalId);
+  timerRunning = true;
   const startTime = Date.now();
-
   timeTrackingIntervalId = setInterval(function () {
     if(timerRunning && quizRunning) {
       let elapsedTime = Date.now() - startTime;
@@ -194,7 +170,7 @@ function startTimeTracking() {
 function stopTimeTracker() {
   timerRunning = false;
   let timeValue = document.getElementById("timer").textContent;
-  responseTimes.push(parseInt(timeValue));
+  responseTimes.push(Number(timeValue));
   console.log(responseTimes);
 }
 
@@ -250,6 +226,43 @@ function getAverageTime() {
   return averageTime.toFixed(2);
   }
   else {
-    return "Zeit konnte man nicht messen."
+    return " Keine Frage beantwortet.";
   }
+}
+
+function setCountersBack() {
+    questionsCounter = 0;
+    badAnswerCounter = 0;
+    goodAnswerCounter = 0;
+    responseTimes = [];
+}
+
+function createAnswerButtons(givenAnswers, cardId, divElement) {
+    givenAnswers.forEach((oneAnswer) => {
+    let answerBtn = document.createElement("button");
+    answerBtn.classList.add("one_answer");
+    answerBtn.innerHTML = oneAnswer.answerContent;
+    answerBtn.id = oneAnswer.answerId;
+    answerBtn.setAttribute("onclick", `validateAnswer(${cardId}, '${oneAnswer.answerId}')`);
+    divElement.appendChild(answerBtn);
+  });
+}
+
+function getGoodAnswerStyle(idOfReply) {
+    goodAnswerCounter++;
+    document.getElementById(idOfReply).classList.add("correct");
+    jsConfetti.addConfetti({confettiColors: [
+    '#FF8A5B', '#FFD262', '#7ED957', '#75C7FF', '#B679FF', '#FF99C2',
+  ], confettiRadius: 4,});
+}
+
+function getBadAnswerStyle(idOfReply) {
+  badAnswerCounter++;
+  document.getElementById(idOfReply).classList.add("incorrect");
+  document.getElementById(idOfReply).classList.add("shake");
+  document.getElementById(idOfReply).classList.add("incorrect");
+  setTimeout(() => {
+    document.getElementById(idOfReply).classList.remove("incorrect");
+    document.getElementById(idOfReply).classList.remove("shake");
+  }, 850);
 }

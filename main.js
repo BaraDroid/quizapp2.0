@@ -6,3 +6,5 @@
 //falls ich import JSConfetti from 'js-confetti'; benutze, wirft es Fehler aus,
 //dass ich es nicht außerhalb der Module nicht benutzen kann
 //will ich überhaupt etwas erzielen, was in dieser Form geht?
+//geht das in github pages so? ich habe es nicht hingekriegt
+//proc je to v devtolls responsive, aber nicht auf dem Handy?
