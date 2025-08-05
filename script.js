@@ -77,7 +77,9 @@ function getQuizCardTemplate(index) {
   let solveBtn = document.createElement("button");
   solveBtn.className = "action_button";
   solveBtn.textContent = "Lösen";
-  solveBtn.setAttribute("onclick",`showSolution(${cardTab.id})`);
+  //solveBtn.setAttribute("onclick",`showSolution(${cardTab.id})`);
+  //oder moderne Lösung für unobtrusives JS:
+  solveBtn.addEventListener("click", () => {showSolution(cardTab.id)});
 
   let nextBtn = document.createElement("button");
   nextBtn.className = "action_button";
