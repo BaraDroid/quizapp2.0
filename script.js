@@ -1,7 +1,4 @@
 let questionsCounter = 0;
-let button = document.getElementById("confettiBtn");
-//const canvas = document.getElementById('confettiCanvas');
-// const jsConfetti = new JSConfetti({ canvas })
 const jsConfetti = new JSConfetti();
 
 let timerRunning = false;
@@ -33,7 +30,7 @@ document.addEventListener("DOMContentLoaded", renderQuestion);
 //document.addEventListener('DOMContentLoaded', renderFinalTab);
 
 function renderQuestion() {
-  let questionIndex = questionsCounter;
+  const questionIndex = questionsCounter;
   if (questionsCounter <= quizQuestions.length - 1) {
     quizRunning = true;
     getQuizCardTemplate(questionIndex);
@@ -47,41 +44,41 @@ function renderQuestion() {
 }
 
 function getQuizCardTemplate(index) {
-  let wrapper = document.getElementById("wrapper");
+  const wrapper = document.getElementById("wrapper");
   wrapper.innerHTML = "";
-  let cardTab = document.createElement("div");
+  const cardTab = document.createElement("div");
   cardTab.className = "quiz_tab";
   cardTab.id = quizQuestions[index].questionId;
-  let titleContainer = document.createElement("div");
+  const titleContainer = document.createElement("div");
   titleContainer.classList.add("title_container");
-  let title = document.createElement("h1");
+  const title = document.createElement("h1");
   title.textContent = "Quiz";
-  let timerDiv = document.createElement("div");
+  const timerDiv = document.createElement("div");
   timerDiv.id = 'timer';
-  let timerSpan = document.createElement("span");
+  const timerSpan = document.createElement("span");
   timerSpan.id = 'timerText';
-  let timerImage = document.createElement("img");
+  const timerImage = document.createElement("img");
   timerImage.setAttribute("src", "assets/timer_icone.png");
   timerImage.classList.add("timer_image");
-  let questionTitle = document.createElement("h2");
+  const questionTitle = document.createElement("h2");
   questionTitle.id = "question";
   questionTitle.innerHTML = quizQuestions[index].questionName;
 
-  let answers = document.createElement("div");
+  const answers = document.createElement("div");
   answers.classList.add("answer_container");
-  let answerToShuffle = shuffleAnswers(quizQuestions[index].answers);
+  const answerToShuffle = shuffleAnswers(quizQuestions[index].answers);
   createAnswerButtons(answerToShuffle, cardTab.id, answers);
 
-  let btnBar = document.createElement("div");
+  const btnBar = document.createElement("div");
   btnBar.classList.add("button_bar");
-  let solveBtn = document.createElement("button");
+  const solveBtn = document.createElement("button");
   solveBtn.className = "action_button";
   solveBtn.textContent = "Lösen";
   //solveBtn.setAttribute("onclick",`showSolution(${cardTab.id})`);
   //oder moderne Lösung für unobtrusives JS:
   solveBtn.addEventListener("click", () => {showSolution(cardTab.id)});
 
-  let nextBtn = document.createElement("button");
+  const nextBtn = document.createElement("button");
   nextBtn.className = "action_button";
   nextBtn.textContent = "Weiter";
   nextBtn.setAttribute("onclick", "renderQuestion()");
@@ -100,8 +97,8 @@ function getQuizCardTemplate(index) {
 }
 
 function validateAnswer(questionId, replyId) {
-  let currentQuestion = quizQuestions[questionId - 1];
-  let correctAnswer = currentQuestion.answers.find((answer) => {
+  const currentQuestion = quizQuestions[questionId - 1];
+  const correctAnswer = currentQuestion.answers.find((answer) => {
   return answer.correct;
   });
   if (correctAnswer.answerId === replyId) {
@@ -114,8 +111,8 @@ function validateAnswer(questionId, replyId) {
 
 function showSolution(questionId) {
     stopTimeTracker();
-    let currentQuestion = quizQuestions[questionId - 1];
-    let correctAnswer = currentQuestion.answers.find((answer) => {
+    const currentQuestion = quizQuestions[questionId - 1];
+    const correctAnswer = currentQuestion.answers.find((answer) => {
     return answer.correct;
   });
   document.getElementById(correctAnswer.answerId).classList.add("correct");
@@ -136,18 +133,17 @@ function shuffleAnswers(array) {
   return shuffledAnswers;
 }
 
-//*region Oficial given solution of shuffle function
+//*region Oficial given solution of shuffle function, not used
+
 //dasda hat er nicht als eigene Funktion gespeichert, sonder direkt in dem renderCard (er hat alles auf einmal, ich habe auch noch template)
 //deswegen wird das bei mir möglichst nicht funktionieren
 //außerdem zeigt es alle Antworten zweimal - einmal angegebe Folge, einmal zufällige
 function shuffleAnswerArray() {
   let answersCopy = [];
   quizQuestions.answers.forEach(answer => answersCopy.push(answer));
-
   while(answersCopy.length > 0) {
     const randomPointer = Math.floor(Math.random() * answersCopy.length);
     let answers = answersCopy.splice(randomPointer, 1)[0]; //da uns splice array zurückgibt
-
     let answerBtn = document.createElement("button");
     answerBtn.classList.add("one_answer");
     answerBtn.innerHTML = oneAnswer.answerContent;
@@ -156,6 +152,7 @@ function shuffleAnswerArray() {
     answers.appendChild(answerBtn);
   }
 }
+//*endregion
 
 function startTimeTracking() {
   clearInterval(timeTrackingIntervalId);
@@ -173,35 +170,34 @@ function stopTimeTracker() {
   timerRunning = false;
   let timeValue = document.getElementById("timer").textContent;
   responseTimes.push(Number(timeValue));
-  console.log(responseTimes);
 }
 
 function renderFinalTab() {
-  let wrapper = document.getElementById("wrapper");
+  const wrapper = document.getElementById("wrapper");
   wrapper.innerHTML = "";
-  let cardTab = document.createElement("div");
+  const cardTab = document.createElement("div");
   cardTab.className = "quiz_tab";
-  let titleContainer = document.createElement("div");
+  const titleContainer = document.createElement("div");
   titleContainer.classList.add("title_container");
-  let title = document.createElement("h1");
+  const title = document.createElement("h1");
   title.textContent = "Quiz";
-  let questionTitle = document.createElement("h2");
+  const questionTitle = document.createElement("h2");
   questionTitle.id = "statistikTitle";
   questionTitle.textContent = "Deine Statistik: ";
 
-  let myData = document.createElement("div");
+  const myData = document.createElement("div");
   myData.classList.add("one_answer");
   myData.id = 'myData';
-  let average = document.createElement("p");
+  const average = document.createElement("p");
   average.textContent = 'Durchschnittliche Antwortdauer: ' + getAverageTime();
-  let goodOnes = document.createElement("p");
+  const goodOnes = document.createElement("p");
   goodOnes.textContent = 'Richtig beantwortete Fragen: ' + goodAnswerCounter;
-  let badOnes = document.createElement("p");
+  const badOnes = document.createElement("p");
   badOnes.textContent = 'Falsch geklickte Antworten: ' + badAnswerCounter;
 
-  let btnBar = document.createElement("div");
+  const btnBar = document.createElement("div");
   btnBar.classList.add("button_bar");
-  let playAgainBtn = document.createElement("button");
+  const playAgainBtn = document.createElement("button");
   playAgainBtn.className = "action_button";
   playAgainBtn.id = 'playAgain';
   playAgainBtn.textContent = "Nochmal spielen";
@@ -241,7 +237,7 @@ function setCountersBack() {
 
 function createAnswerButtons(givenAnswers, cardId, divElement) {
     givenAnswers.forEach((oneAnswer) => {
-    let answerBtn = document.createElement("button");
+    const answerBtn = document.createElement("button");
     answerBtn.classList.add("one_answer");
     answerBtn.innerHTML = oneAnswer.answerContent;
     answerBtn.id = oneAnswer.answerId;
