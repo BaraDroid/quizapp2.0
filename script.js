@@ -1,5 +1,7 @@
 let questionsCounter = 0;
+import JSConfetti from 'js-confetti';
 const jsConfetti = new JSConfetti();
+
 
 let timerRunning = false;
 let quizRunning = false;
@@ -27,7 +29,6 @@ let goodAnswerCounter = 0;
 // </div>
 
 document.addEventListener("DOMContentLoaded", renderQuestion);
-//document.addEventListener('DOMContentLoaded', renderFinalTab);
 
 function renderQuestion() {
   const questionIndex = questionsCounter;

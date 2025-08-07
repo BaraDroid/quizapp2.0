@@ -1,0 +1,29 @@
+{
+  "name": "quizapp2.0",
+  "version": "1.0.0",
+  "description": "quizApp for javascript training",
+  "homepage": "https://github.com/BaraDroid/quizapp2.0#readme",
+  "bugs": {
+    "url": "https://github.com/BaraDroid/quizapp2.0/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BaraDroid/quizapp2.0.git"
+  },
+  "license": "MIT",
+  "author": "BaraDroid",
+  "type": "commonjs",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "bye": "echo Tschüß, $NAME!"
+  },
+  "dependencies": {
+    "confetti": "^2.0.6",
+    "js": "^0.1.0"
+  },
+  "keywords": [],
+  "devDependencies": {
+    "js-confetti": "^0.12.0"
+  }
+}
