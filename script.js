@@ -1,5 +1,4 @@
 let questionsCounter = 0;
-import JSConfetti from 'js-confetti';
 const jsConfetti = new JSConfetti();
 
 
