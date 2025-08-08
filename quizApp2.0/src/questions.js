@@ -153,7 +153,7 @@ export const quizQuestions = [
         answerId: "b",
       },
       {
-        answerContent: "Ein leerer String – weil JavaScript denkt, du willst concatenaten.",
+        answerContent: "Ein leerer String – weil JavaScript denkt, du willst concatenieren.",
         correct: true,
         answerId: "c",
       },
