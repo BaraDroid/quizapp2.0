@@ -1,4 +1,4 @@
-let quizQuestions = [
+const quizQuestions = [
   {
     questionId: 1,
     questionName: "Was ist das Besondere an typeof null in JavaScript?",
@@ -161,3 +161,20 @@ let quizQuestions = [
     ],
   },
 ];
+
+const stats = [
+  {
+    title: "Durchschnittliche Antwortdauer:",
+    data: getAverageTime
+  },
+  {
+    title: "Richtige Antworten:",
+    data: () => goodAnswerCounter
+  },
+  {
+    title: "Falsche Antworten:",
+    data: () => badAnswerCounter
+  }
+];
+console.log(stats);
+

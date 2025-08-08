@@ -27,7 +27,8 @@ let goodAnswerCounter = 0;
 //     </div>
 // </div>
 
-document.addEventListener("DOMContentLoaded", renderQuestion);
+//document.addEventListener("DOMContentLoaded", renderQuestion);
+document.addEventListener("DOMContentLoaded", renderFinalTab);
 
 function renderQuestion() {
   const questionIndex = questionsCounter;
@@ -189,11 +190,11 @@ function renderFinalTab() {
   myData.classList.add("one_answer");
   myData.id = 'myData';
   const average = document.createElement("p");
-  average.textContent = 'Durchschnittliche Antwortdauer: ' + getAverageTime();
+  average.textContent = stats[0].title + stats[0].data();
   const goodOnes = document.createElement("p");
-  goodOnes.textContent = 'Richtig beantwortete Fragen: ' + goodAnswerCounter;
+  goodOnes.textContent = stats[1].title + stats[1].data();
   const badOnes = document.createElement("p");
-  badOnes.textContent = 'Falsch geklickte Antworten: ' + badAnswerCounter;
+  badOnes.textContent = stats[2].title + stats[2].data();
 
   const btnBar = document.createElement("div");
   btnBar.classList.add("button_bar");
@@ -230,9 +231,10 @@ function getAverageTime() {
 
 function setCountersBack() {
     questionsCounter = 0;
+    responseTimes = [];
     badAnswerCounter = 0;
     goodAnswerCounter = 0;
-    responseTimes = [];
+    
 }
 
 function createAnswerButtons(givenAnswers, cardId, divElement) {
@@ -255,12 +257,12 @@ function getGoodAnswerStyle(idOfReply) {
 }
 
 function getBadAnswerStyle(idOfReply) {
+  let answerBtn = document.getElementById(idOfReply);
   badAnswerCounter++;
-  document.getElementById(idOfReply).classList.add("incorrect");
-  document.getElementById(idOfReply).classList.add("shake");
-  document.getElementById(idOfReply).classList.add("incorrect");
+  answerBtn.classList.add("shake");
+  answerBtn.classList.add("incorrect");
   setTimeout(() => {
-    document.getElementById(idOfReply).classList.remove("incorrect");
-    document.getElementById(idOfReply).classList.remove("shake");
+    answerBtn.classList.remove("incorrect");
+    answerBtn.classList.remove("shake");
   }, 850);
 }
