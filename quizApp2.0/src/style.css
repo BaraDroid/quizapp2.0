@@ -110,17 +110,6 @@ button:hover {
     background-color: var(--bad-answer);
 }
 
-/* #confettiCanvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none; 
-  lässt Klicke durch
-  z-index: 5;
-} */
-
 .shake {
     animation-name: shake;
     animation-duration: 0.8s;
@@ -170,9 +159,26 @@ button:hover {
   100% {box-shadow: 0 0 10px 5px var(--gradient-dark);}
 }
 
-#myData {
-    height: fit-content;
+.my_data {
     animation: glowing-shadow 2s infinite alternate;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+
+.my_data span:nth-child(2) {
+    font-weight: bold;
+    font-size: 4.5rem;
+}
+
+.stats {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
 }
 
 #statistikTitle {
@@ -195,6 +201,10 @@ button:hover {
     z-index: 7;
 }
 
+#specialFontStyle {
+    font-size: 1rem;
+}
+
 /************+RESPONSIVENESS**************************+*/
 @media (max-width: 800px) {
     .answer_container {
@@ -211,6 +221,12 @@ button:hover {
     }
     .one_answer {
         padding: 1rem;
+    }
+}
+
+@media(max-width: 630px) {
+    .stats {
+        flex-direction: column;
     }
 }
 

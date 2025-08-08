@@ -1,4 +1,8 @@
-export let quizQuestions = [
+import { getAverageTime } from "./main";
+import { goodAnswerCounter } from "./main";
+import { badAnswerCounter } from "./main";
+
+export const quizQuestions = [
   {
     questionId: 1,
     questionName: "Was ist das Besondere an typeof null in JavaScript?",
@@ -264,4 +268,19 @@ export let quizQuestions = [
             },
         ],
     },
+];
+
+export const stats = [
+  {
+    title: "Durchschnittliche Antwortdauer:",
+    data: getAverageTime
+  },
+  {
+    title: "Richtige Antworten:",
+    data: () => goodAnswerCounter
+  },
+  {
+    title: "Falsche Antworten:",
+    data: () => badAnswerCounter
+  }
 ];

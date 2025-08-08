@@ -1,5 +1,6 @@
 import './style.css'
 import { quizQuestions } from './questions.js'
+import { stats } from './questions.js'
 import JSConfetti from 'js-confetti';
 const jsConfetti = new JSConfetti();
 
@@ -8,29 +9,10 @@ let timerRunning = false;
 let quizRunning = false;
 let responseTimes = [];
 let timeTrackingIntervalId;
-let badAnswerCounter = 0;
-let goodAnswerCounter = 0;
-
-//*region One card as HTML template for renderQuestion function.
-// <div class="quiz_tab" id="questionId">
-//     <div class="title_container">
-//       <h1>Quiz</h1>
-//     </div>
-//     <h2 id="question">Wie viele Augen hat ein Mensch?</h2>
-//     <div class="answer_container">
-//         <button class="one_answer incorrect" id="answerIndex0">Möglichst viele.</button>
-//         <button class="one_answer">Nur ein einziges in der Stirnmitte.</button>
-//         <button class="one_answer">Zwei.</button>
-//         <button class="one_answer correct">Es ist eine Trickfrage, ein Mensch hat keine Augen.</button>
-//     </div>
-//     <div class="button_bar">
-//         <button class="action_button">Lösung</button>
-//         <button class="action_button">Weiter</button>
-//     </div>
-// </div>
+export let badAnswerCounter = 0;
+export let goodAnswerCounter = 0;
 
 document.addEventListener("DOMContentLoaded", renderQuestion);
-//document.addEventListener('DOMContentLoaded', renderFinalTab);
 
 function renderQuestion() {
   const questionIndex = questionsCounter;
@@ -77,9 +59,6 @@ function getQuizCardTemplate(index) {
   const solveBtn = document.createElement("button");
   solveBtn.className = "action_button";
   solveBtn.textContent = "Lösen";
-  //solveBtn.setAttribute("onclick",`showSolution(${cardTab.id})`);
-  //Lösung über setAttribute funktioniert nicht in Vite
-  //oder moderne Lösung für unobtrusives JS:
   solveBtn.addEventListener("click", () => {showSolution(cardTab.id)});
 
   const nextBtn = document.createElement("button");
@@ -107,14 +86,14 @@ function validateAnswer(questionId, replyId) {
   });
   if (correctAnswer.answerId === replyId) {
     getGoodAnswerStyle(replyId);
-    stopTimeTracker();
+    stopTimeTracking();
   } else {
     getBadAnswerStyle(replyId);
   }
 }
 
 function showSolution(questionId) {
-    stopTimeTracker();
+    stopTimeTracking();
     const currentQuestion = quizQuestions[questionId - 1];
     const correctAnswer = currentQuestion.answers.find((answer) => {
     return answer.correct;
@@ -137,27 +116,6 @@ function shuffleAnswers(array) {
   return shuffledAnswers;
 }
 
-//*region Oficial given solution of shuffle function, not used
-
-//dasda hat er nicht als eigene Funktion gespeichert, sonder direkt in dem renderCard (er hat alles auf einmal, ich habe auch noch template)
-//deswegen wird das bei mir möglichst nicht funktionieren
-//außerdem zeigt es alle Antworten zweimal - einmal angegebe Folge, einmal zufällige
-function shuffleAnswerArray() {
-  let answersCopy = [];
-  quizQuestions.answers.forEach(answer => answersCopy.push(answer));
-  while(answersCopy.length > 0) {
-    const randomPointer = Math.floor(Math.random() * answersCopy.length);
-    let answers = answersCopy.splice(randomPointer, 1)[0]; //da uns splice array zurückgibt
-    let answerBtn = document.createElement("button");
-    answerBtn.classList.add("one_answer");
-    answerBtn.innerHTML = oneAnswer.answerContent;
-    answerBtn.id = oneAnswer.answerId;
-    answerBtn.setAttribute("onclick", `validateAnswer(${cardTab.id}, '${oneAnswer.answerId}')`);
-    answers.appendChild(answerBtn);
-  }
-}
-//*endregion
-
 function startTimeTracking() {
   clearInterval(timeTrackingIntervalId);
   timerRunning = true;
@@ -170,9 +128,9 @@ function startTimeTracking() {
   }, 100);
 }
 
-function stopTimeTracker() {
+function stopTimeTracking() {
   timerRunning = false;
-  let timeValue = document.getElementById("timer").textContent;
+  const timeValue = document.getElementById("timer").textContent;
   responseTimes.push(Number(timeValue));
 }
 
@@ -190,14 +148,8 @@ function renderFinalTab() {
   questionTitle.textContent = "Deine Statistik: ";
 
   const myData = document.createElement("div");
-  myData.classList.add("one_answer");
-  myData.id = 'myData';
-  const average = document.createElement("p");
-  average.textContent = 'Durchschnittliche Antwortdauer: ' + getAverageTime();
-  const goodOnes = document.createElement("p");
-  goodOnes.textContent = 'Richtig beantwortete Fragen: ' + goodAnswerCounter;
-  const badOnes = document.createElement("p");
-  badOnes.textContent = 'Falsch geklickte Antworten: ' + badAnswerCounter;
+  myData.classList.add("stats");
+  createDataBubbles(myData);
 
   const btnBar = document.createElement("div");
   btnBar.classList.add("button_bar");
@@ -212,14 +164,34 @@ function renderFinalTab() {
   titleContainer.appendChild(title);
   cardTab.appendChild(questionTitle);
   cardTab.appendChild(myData);
-  myData.appendChild(average);
-  myData.appendChild(goodOnes);
-  myData.appendChild(badOnes);
   cardTab.appendChild(btnBar);
   btnBar.appendChild(playAgainBtn);
 }
 
-function getAverageTime() {
+function createDataBubbles(parent) {
+    const dataBubbles = stats.forEach((item, index) => {
+    let dataBubble;
+    dataBubble = document.createElement("div");
+    dataBubble.classList.add("one_answer");
+    dataBubble.classList.add("my_data");
+    const statsTitle = document.createElement("span");
+    statsTitle.textContent = stats[index].title;
+    const statsSum = document.createElement("span");
+    statsSum.textContent = stats[index].data();
+    parent.appendChild(dataBubble);
+    dataBubble.appendChild(statsTitle);
+    dataBubble.appendChild(statsSum);
+    decreaseFont(item, statsSum);
+  });
+}
+
+function decreaseFont(element, sum) {
+      if (element.title === "Durchschnittliche Antwortdauer:" && getAverageTime() === "Keine Frage beantwortet.") {
+      sum.id = "specialFontStyle";
+    }
+}
+
+export function getAverageTime() {
   if(responseTimes.length >0) {
     let timeSum = responseTimes.reduce((sum, num) => {
     return sum + num;
@@ -228,7 +200,7 @@ function getAverageTime() {
   return averageTime.toFixed(2);
   }
   else {
-    return " Keine Frage beantwortet.";
+    return "Keine Frage beantwortet.";
   }
 }
 
@@ -259,12 +231,12 @@ function getGoodAnswerStyle(idOfReply) {
 }
 
 function getBadAnswerStyle(idOfReply) {
+  const answerBtn = document.getElementById(idOfReply);
   badAnswerCounter++;
-  document.getElementById(idOfReply).classList.add("incorrect");
-  document.getElementById(idOfReply).classList.add("shake");
-  document.getElementById(idOfReply).classList.add("incorrect");
+  answerBtn.classList.add("shake");
+  answerBtn.classList.add("incorrect");
   setTimeout(() => {
-    document.getElementById(idOfReply).classList.remove("incorrect");
-    document.getElementById(idOfReply).classList.remove("shake");
+    answerBtn.classList.remove("incorrect");
+    answerBtn.classList.remove("shake");
   }, 850);
 }

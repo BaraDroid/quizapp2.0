@@ -176,5 +176,4 @@ const stats = [
     data: () => badAnswerCounter
   }
 ];
-console.log(stats);
 

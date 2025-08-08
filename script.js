@@ -27,8 +27,8 @@ let goodAnswerCounter = 0;
 //     </div>
 // </div>
 
-//document.addEventListener("DOMContentLoaded", renderQuestion);
-document.addEventListener("DOMContentLoaded", renderFinalTab);
+document.addEventListener("DOMContentLoaded", renderQuestion);
+//document.addEventListener("DOMContentLoaded", renderFinalTab);
 
 function renderQuestion() {
   const questionIndex = questionsCounter;
@@ -104,14 +104,14 @@ function validateAnswer(questionId, replyId) {
   });
   if (correctAnswer.answerId === replyId) {
     getGoodAnswerStyle(replyId);
-    stopTimeTracker();
+    stopTimeTracking();
   } else {
     getBadAnswerStyle(replyId);
   }
 }
 
 function showSolution(questionId) {
-    stopTimeTracker();
+    stopTimeTracking();
     const currentQuestion = quizQuestions[questionId - 1];
     const correctAnswer = currentQuestion.answers.find((answer) => {
     return answer.correct;
@@ -167,9 +167,9 @@ function startTimeTracking() {
   }, 100);
 }
 
-function stopTimeTracker() {
+function stopTimeTracking() {
   timerRunning = false;
-  let timeValue = document.getElementById("timer").textContent;
+  const timeValue = document.getElementById("timer").textContent;
   responseTimes.push(Number(timeValue));
 }
 
@@ -187,14 +187,8 @@ function renderFinalTab() {
   questionTitle.textContent = "Deine Statistik: ";
 
   const myData = document.createElement("div");
-  myData.classList.add("one_answer");
-  myData.id = 'myData';
-  const average = document.createElement("p");
-  average.textContent = stats[0].title + stats[0].data();
-  const goodOnes = document.createElement("p");
-  goodOnes.textContent = stats[1].title + stats[1].data();
-  const badOnes = document.createElement("p");
-  badOnes.textContent = stats[2].title + stats[2].data();
+  myData.classList.add("stats");
+  createDataBubbles(myData);
 
   const btnBar = document.createElement("div");
   btnBar.classList.add("button_bar");
@@ -209,11 +203,27 @@ function renderFinalTab() {
   titleContainer.appendChild(title);
   cardTab.appendChild(questionTitle);
   cardTab.appendChild(myData);
-  myData.appendChild(average);
-  myData.appendChild(goodOnes);
-  myData.appendChild(badOnes);
   cardTab.appendChild(btnBar);
   btnBar.appendChild(playAgainBtn);
+}
+
+function createDataBubbles(parent) {
+    const dataBubbles = stats.forEach((item, index) => {
+    let dataBubble;
+    dataBubble = document.createElement("div");
+    dataBubble.classList.add("one_answer");
+    dataBubble.classList.add("my_data");
+    const statsTitle = document.createElement("span");
+    statsTitle.textContent = stats[index].title;
+    const statsSum = document.createElement("span");
+    statsSum.textContent = stats[index].data();
+    parent.appendChild(dataBubble);
+    dataBubble.appendChild(statsTitle);
+    dataBubble.appendChild(statsSum);
+    if (item.title === "Durchschnittliche Antwortdauer:" && getAverageTime() === "Keine Frage beantwortet.") {
+      statsSum.id = "specialFontStyle";
+    }
+  });
 }
 
 function getAverageTime() {
@@ -225,7 +235,7 @@ function getAverageTime() {
   return averageTime.toFixed(2);
   }
   else {
-    return " Keine Frage beantwortet.";
+    return "Keine Frage beantwortet.";
   }
 }
 
@@ -257,7 +267,7 @@ function getGoodAnswerStyle(idOfReply) {
 }
 
 function getBadAnswerStyle(idOfReply) {
-  let answerBtn = document.getElementById(idOfReply);
+  const answerBtn = document.getElementById(idOfReply);
   badAnswerCounter++;
   answerBtn.classList.add("shake");
   answerBtn.classList.add("incorrect");
