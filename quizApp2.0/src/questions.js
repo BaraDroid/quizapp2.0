@@ -160,4 +160,108 @@ export let quizQuestions = [
       },
     ],
   },
+      {
+        questionId: 7,
+        questionName: 'Welche Programmiersprache wurde ursprünglich "Oak" genannt, bevor sie ihren heutigen Namen erhielt?',
+        answers: [
+            {
+                answerContent: "Python",
+                correct: false,
+                answerId: "a",
+            },
+            {
+                answerContent: "Java",
+                correct: true,
+                answerId: "b",
+            },
+            {
+                answerContent: "C++",
+                correct: false,
+                answerId: "c",
+            },
+            {
+                answerContent: "Ruby",
+                correct: false,
+                answerId: "d",
+            },
+        ],
+    },
+    {
+        questionId: 8,
+        questionName: 'Was ist ein "Heisenbug"?',
+        answers: [
+            {
+                answerContent: "Ein Bug, der durch die Ausführung der Software auf einem bestimmten Betriebssystem verursacht wird.",
+                correct: false,
+                answerId: "a",
+            },
+            {
+                answerContent: "Ein Bug, der schwer zu reproduzieren ist, weil er sein Verhalten ändert, sobald man ihn beobachtet oder debuggt.",
+                correct: true,
+                answerId: "b",
+            },
+            {
+                answerContent: "Ein Bug, der nur auftritt, wenn die Software im Ruhezustand ist.",
+                correct: false,
+                answerId: "c",
+            },
+            {
+                answerContent: "Ein Bug, der durch fehlende Semikolons in JavaScript verursacht wird.",
+                correct: false,
+                answerId: "d",
+            },
+        ],
+    },
+    {
+        questionId: 9,
+        questionName: "Was ist ein Null-Pointer-Fehler?",
+        answers: [
+            {
+                answerContent: "Ein Fehler, der durch die Division durch Null verursacht wird.",
+                correct: false,
+                answerId: "a",
+            },
+            {
+                answerContent: "Ein Fehler, bei dem versucht wird, auf einen Speicherbereich zuzugreifen, der nicht zugewiesen wurde.",
+                correct: true,
+                answerId: "b",
+            },
+            {
+                answerContent: "Ein Fehler, der beim Öffnen einer leeren Datei auftritt.",
+                correct: false,
+                answerId: "c",
+            },
+            {
+                answerContent: "Ein Fehler, der durch die Verwendung von nicht initialisierten Variablen verursacht wird.",
+                correct: false,
+                answerId: "d",
+            },
+        ],
+    },
+    {
+        questionId: 10,
+        questionName: 'Wofür steht der Begriff "Pixel"?',
+        answers: [
+            {
+                answerContent: "Ein mysteriöses, unsichtbares Wesen, das Bugs verursacht.",
+                correct: false,
+                answerId: "a",
+            },
+            {
+                answerContent: "Picture Element",
+                correct: true,
+                answerId: "b",
+            },
+            {
+                answerContent: "Picture Excel",
+                correct: false,
+                answerId: "c",
+            },
+            {
+                answerContent: "Pixel ist ein Name aus dem Computerjargon, der nichts bedeutet.",
+                correct: false,
+                answerId: "d",
+            },
+        ],
+    },
 ];
