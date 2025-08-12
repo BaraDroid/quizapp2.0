@@ -3,6 +3,7 @@ import { quizQuestions } from './questions.js'
 import { stats } from './questions.js'
 import JSConfetti from 'js-confetti';
 const jsConfetti = new JSConfetti();
+import timerIcon from '/timer_icone.png';
 
 let questionsCounter = 0;
 let timerRunning = false;
@@ -43,7 +44,8 @@ function getQuizCardTemplate(index) {
   const timerSpan = document.createElement("span");
   timerSpan.id = 'timerText';
   const timerImage = document.createElement("img");
-  timerImage.setAttribute("src", "timer_icone.png");
+  // timerImage.setAttribute("src", "timer_icone.png");
+  timerImage.setAttribute("src", timerIcon);
   timerImage.classList.add("timer_image");
   const questionTitle = document.createElement("h2");
   questionTitle.id = "question";
