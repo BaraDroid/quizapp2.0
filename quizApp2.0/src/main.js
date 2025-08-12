@@ -43,7 +43,7 @@ function getQuizCardTemplate(index) {
   const timerSpan = document.createElement("span");
   timerSpan.id = 'timerText';
   const timerImage = document.createElement("img");
-  timerImage.setAttribute("src", "/timer_icone.png");
+  timerImage.setAttribute("src", "timer_icone.png");
   timerImage.classList.add("timer_image");
   const questionTitle = document.createElement("h2");
   questionTitle.id = "question";
