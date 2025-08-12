@@ -1,6 +1,7 @@
-# Farbenspiel Quiz 🎨✨
+# A little IT-Knowledge Quiz
 
-**Quizapp 2.0** is a colorful quiz application designed with fun in mind. The project focuses on cheerful user interaction, colorful transitions, and animated feedback.
+**Quizapp 2.0** is a colorful quiz application designed with fun in mind. The project focuses on cheerful user interaction, colorful transitions and animated feedback.
+Building the **Quizapp 2.0**  was also my first hands-on experience with **Vite**.
 
 ## ✨ Features
 
@@ -17,6 +18,7 @@
 
 ## 🛠️ Technologies & Libraries Used
 
+The latest Version was built using Vite, a modern frontend build tool, which also served as my first hands-on experience with it.
 - Vanilla JavaScript / HTML / CSS
 - Custom shuffle function for randomizing answers
 - Custom timer logic using JavaScript
